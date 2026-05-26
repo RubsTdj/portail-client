@@ -177,14 +177,16 @@ export default function PrendreRdvPage() {
         ) : (
           <div />
         )}
-        <Button
-          variant="primary"
-          size="lg"
-          onClick={handleNext}
-          disabled={!canGoNext()}
-        >
-          Suivant →
-        </Button>
+        {currentStep < STEPS.length - 1 && (
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={handleNext}
+            disabled={!canGoNext()}
+          >
+            Suivant →
+          </Button>
+        )}
       </div>
 
       <AddMotoModal
