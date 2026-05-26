@@ -4,7 +4,10 @@ import { useState } from "react";
 import { PageHeader } from "@/components/layout/page-header";
 import { RdvCard } from "@/components/rdv/rdv-card";
 import { Tabs } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { IconCalendar } from "@/components/ui/icons";
 import { mockAppointments } from "@/lib/mock-data";
+import Link from "next/link";
 
 type TabId = "a_venir" | "termines" | "annules";
 
@@ -40,7 +43,7 @@ export default function MesRdvPage() {
     <div>
       <PageHeader title="Mes Rendez-vous" />
 
-      <div className="mb-6">
+      <div className="mb-5">
         <Tabs
           tabs={tabs}
           activeTab={activeTab}
@@ -50,11 +53,19 @@ export default function MesRdvPage() {
 
       {displayed.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
-          <p className="text-sm text-gray-500">
+          <IconCalendar size={40} className="text-gray-300 mb-3" />
+          <p className="text-sm text-gray-500 mb-4">
             {activeTab === "a_venir" && "Aucun rendez-vous à venir."}
             {activeTab === "termines" && "Aucun rendez-vous passé."}
             {activeTab === "annules" && "Aucun rendez-vous annulé."}
           </p>
+          {activeTab === "a_venir" && (
+            <Link href="/prendre-rdv">
+              <Button variant="primary" size="md">
+                Prendre un rendez-vous
+              </Button>
+            </Link>
+          )}
         </div>
       ) : (
         <div className="flex flex-col gap-3">
