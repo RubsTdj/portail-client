@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useAuth, SignupData } from "@/lib/auth";
 import { Input } from "@/components/ui/input";
-import { PasswordInput } from "@/components/ui/password-input";
+import { PasswordInput, RULES } from "@/components/ui/password-input";
 import { Button } from "@/components/ui/button";
 import { AddressAutocomplete } from "@/components/ui/address-autocomplete";
 import { PhoneInput } from "@/components/ui/phone-input";
@@ -27,12 +27,14 @@ export function SignupForm() {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
+  const passwordValid = RULES.every((r) => r.test(form.password));
+
   const canContinue =
     step === 1 &&
     form.firstName.trim() &&
     form.lastName.trim() &&
     form.email.trim() &&
-    form.password.length >= 8;
+    passwordValid;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,6 +118,7 @@ export function SignupForm() {
                 placeholder="8 caractères minimum"
                 value={form.password}
                 onChange={(e) => handleChange("password", e.target.value)}
+                showStrength
                 required
               />
 
