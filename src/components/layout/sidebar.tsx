@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/lib/auth";
 import { mockUser } from "@/lib/mock-data";
 
 const navItems = [
@@ -17,6 +18,8 @@ const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { user, logout } = useAuth();
+  const displayUser = user || mockUser;
 
   return (
     <aside className="fixed left-0 top-0 z-40 flex h-screen w-[220px] flex-col border-r border-gray-100 bg-white">
@@ -26,12 +29,12 @@ export function Sidebar() {
 
       <div className="flex items-center gap-3 px-5 pb-6">
         <Avatar
-          firstName={mockUser.firstName}
-          lastName={mockUser.lastName}
+          firstName={displayUser.firstName}
+          lastName={displayUser.lastName}
           size="md"
         />
         <span className="text-sm font-medium text-gray-900">
-          {mockUser.firstName}
+          {displayUser.firstName}
         </span>
       </div>
 
@@ -68,7 +71,10 @@ export function Sidebar() {
       </div>
 
       <div className="px-5 pb-6">
-        <button className="text-sm text-gray-500 underline hover:text-gray-700 transition-colors">
+        <button
+          onClick={logout}
+          className="text-sm text-gray-500 underline hover:text-gray-700 transition-colors"
+        >
           Déconnexion
         </button>
       </div>
