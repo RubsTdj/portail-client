@@ -40,27 +40,27 @@ export function StepMoto({
             >
               <div className="flex items-center gap-4">
                 <IconMotorcycle
-                  size={22}
-                  className={isSelected ? "text-primary-600" : "text-gray-500"}
+                  size={24}
+                  className={isSelected ? "text-primary-600" : "text-gray-600"}
                 />
                 <div>
-                  <p className="font-semibold text-gray-900">
+                  <p className="font-bold text-gray-900">
                     {moto.brand} - {moto.model}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-600">
                     {moto.year} - {moto.displacement} cc
                   </p>
-                  <span className="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-600 mt-1">
+                  <span className="inline-flex items-center rounded bg-gray-200 px-2 py-0.5 text-xs font-medium text-gray-700 mt-1">
                     {moto.licensePlate}
                   </span>
                 </div>
               </div>
               <div
                 className={cn(
-                  "h-5 w-5 rounded-full border-2 shrink-0 transition-colors",
+                  "h-5 w-5 rounded-full border-2 shrink-0 transition-all",
                   isSelected
-                    ? "border-primary-600 bg-primary-600"
-                    : "border-gray-300"
+                    ? "border-primary-600 bg-primary-600 shadow-sm"
+                    : "border-gray-400"
                 )}
               />
             </Card>
@@ -74,7 +74,7 @@ export function StepMoto({
           onClick={onAddMoto}
         >
           <IconPlus size={22} className="text-primary-600 mb-1" />
-          <span className="text-sm font-semibold text-primary-600">
+          <span className="text-sm font-bold text-primary-600">
             Ajouter une moto
           </span>
         </Card>

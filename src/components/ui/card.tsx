@@ -26,11 +26,11 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         className={cn(
           "rounded-xl bg-white p-5",
-          bordered && !dashed && "border border-gray-200 shadow-sm",
-          dashed && "border-2 border-dashed border-primary-400",
+          bordered && !dashed && !selected && "border border-gray-300/80 shadow-sm",
+          dashed && "border-2 border-dashed border-primary-500 bg-primary-50/20",
           hoverable &&
-            "cursor-pointer transition-shadow hover:shadow-md",
-          selected && "border-2 border-primary-600 bg-primary-50",
+            "cursor-pointer transition-all hover:shadow-md hover:border-gray-400",
+          selected && "border-2 border-primary-600 bg-primary-50 shadow-sm",
           className
         )}
         {...props}

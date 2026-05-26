@@ -25,20 +25,27 @@ export default function AccueilPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">
-          Bonjour {displayUser.firstName} 👋
-        </h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Bienvenue sur votre espace JBF Motos
-        </p>
+      <div className="flex items-start justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Bonjour {displayUser.firstName} 👋
+          </h1>
+          <p className="mt-1 text-sm text-gray-500">
+            Bienvenue sur votre espace JBF Motos
+          </p>
+        </div>
+        <Link href="/prendre-rdv" className="hidden lg:block shrink-0">
+          <Button variant="primary" size="lg">
+            Prendre un rendez-vous
+          </Button>
+        </Link>
       </div>
 
       <div className="mb-5">
         <NextAppointmentCard appointment={nextAppointment} moto={nextMoto} />
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard
           icon={<IconCalendar size={24} />}
           value={upcomingAppointments.length}
@@ -68,12 +75,6 @@ export default function AccueilPage() {
           accent="text-emerald-500"
         />
       </div>
-
-      <Link href="/prendre-rdv" className="hidden lg:block">
-        <Button variant="primary" size="xl" fullWidth className="rounded-xl">
-          PRENDRE UN RENDEZ-VOUS →
-        </Button>
-      </Link>
     </div>
   );
 }
