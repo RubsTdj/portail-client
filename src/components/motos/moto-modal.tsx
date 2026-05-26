@@ -7,6 +7,7 @@ import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { DISPLACEMENTS } from "@/lib/utils";
 import { BRAND_NAMES, getModelsForBrand } from "@/lib/moto-catalog";
+import { VinInput } from "@/components/ui/vin-input";
 import { Moto } from "@/lib/types";
 import { validateVin } from "@/lib/moto-validation";
 
@@ -127,9 +128,9 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
   const handleSubmit = () => {
     const year = parseInt(form.year) || 0;
     if (form.vin) {
-      const error = validateVin(form.vin, year);
-      if (error) {
-        setVinError(error);
+      const result = validateVin(form.vin, year);
+      if (result.error) {
+        setVinError(result.error);
         return;
       }
     }
@@ -267,19 +268,13 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
 
         {/* Row 5: VIN (full width) */}
         <div className="sm:col-span-2">
-          <Input
+          <VinInput
             id="vin"
             label="N° de série (VIN)"
-            placeholder="Ex: VF1RJA00056789012"
             value={form.vin}
-            onChange={(e) => handleChange("vin", e.target.value.toUpperCase())}
-            error={vinError || undefined}
+            onChange={(value) => handleChange("vin", value)}
+            year={parseInt(form.year) || 0}
           />
-          {!vinError && (
-            <p className="mt-1 text-xs text-gray-400">
-              Disponible sur votre carte grise — champ E
-            </p>
-          )}
         </div>
       </div>
 
