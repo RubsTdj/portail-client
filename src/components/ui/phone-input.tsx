@@ -104,10 +104,10 @@ export function PhoneInput({
       <div ref={dropdownRef} className="relative">
         <div
           className={cn(
-            "flex items-center rounded-lg border border-gray-300 transition-colors",
+            "flex items-center rounded-lg border border-gray-300 bg-white transition-colors",
             "focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-primary-500",
             error && "border-red-500 focus-within:border-red-500 focus-within:ring-red-500",
-            readOnly && "bg-gray-50",
+            readOnly && "!bg-gray-50",
             className
           )}
         >
