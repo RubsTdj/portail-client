@@ -210,7 +210,7 @@ export default function PrendreRdvPage() {
       <MotoModal
         isOpen={isAddMotoOpen}
         onClose={() => setIsAddMotoOpen(false)}
-        onAdd={handleAddMoto}
+        onSubmit={handleAddMoto}
       />
     </div>
   );
