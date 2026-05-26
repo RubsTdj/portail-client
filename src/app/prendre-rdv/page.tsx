@@ -166,6 +166,7 @@ export default function PrendreRdvPage() {
           <StepCreneau
             moto={selectedMoto}
             service={selectedService}
+            selectedSubOptions={selectedSubOptions}
             totalDuration={totalDuration}
             user={displayUser}
             notes={buildNotes()}

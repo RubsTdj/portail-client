@@ -8,6 +8,7 @@ import { buildCalLink } from "@/lib/cal-config";
 interface StepCreneauProps {
   moto: Moto;
   service: Service;
+  selectedSubOptions: string[];
   totalDuration: number;
   user: User;
   notes: string;
@@ -25,10 +26,14 @@ const PROVISIONAL_TERMS = `En prenant rendez-vous, je reconnais avoir pris conna
 export function StepCreneau({
   moto,
   service,
+  selectedSubOptions,
   totalDuration,
   user,
   notes,
 }: StepCreneauProps) {
+  const selectedOptions = service.subOptions?.filter((s) =>
+    selectedSubOptions.includes(s.id)
+  ) ?? [];
   const [accepted, setAccepted] = useState(false);
 
   const calLink = buildCalLink({
@@ -69,9 +74,21 @@ export function StepCreneau({
             </div>
           </div>
 
-          <div className="flex items-center gap-3 py-4 border-b border-gray-100">
-            <span className="text-primary-600">✓</span>
-            <p className="text-sm font-medium text-gray-900">{service.name}</p>
+          <div className="py-4 border-b border-gray-100">
+            <div className="flex items-center gap-3">
+              <span className="text-primary-600">✓</span>
+              <p className="text-sm font-medium text-gray-900">{service.name}</p>
+            </div>
+            {selectedOptions.length > 0 && (
+              <ul className="mt-2 ml-8 flex flex-col gap-1">
+                {selectedOptions.map((opt) => (
+                  <li key={opt.id} className="flex items-center gap-2 text-sm text-gray-600">
+                    <span className="text-primary-500">•</span>
+                    {opt.name}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div className="pt-4">
@@ -80,7 +97,7 @@ export function StepCreneau({
                 type="checkbox"
                 checked={accepted}
                 onChange={(e) => setAccepted(e.target.checked)}
-                className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 accent-primary-600 focus:ring-primary-500"
               />
               <span className="text-xs text-gray-500 leading-relaxed whitespace-pre-line group-hover:text-gray-700 transition-colors">
                 {PROVISIONAL_TERMS}
@@ -97,7 +114,7 @@ export function StepCreneau({
                 href={calLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-medium text-blue-600 hover:underline"
+                className="text-sm font-medium text-primary-600 hover:underline"
               >
                 Cliquez ici
               </a>

@@ -66,7 +66,10 @@ export function StepService({
                   </p>
 
                   {service.hasSubOptions && service.subOptions && (
-                    <div className="mt-4 flex flex-col gap-2">
+                    <div
+                      className="mt-4 flex flex-col gap-2"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       {service.subOptions.map((sub) => {
                         const isSubSelected = selectedSubOptions.includes(
                           sub.id
@@ -75,13 +78,12 @@ export function StepService({
                           <label
                             key={sub.id}
                             className="flex items-center gap-3 cursor-pointer"
-                            onClick={(e) => e.stopPropagation()}
                           >
                             <input
                               type="checkbox"
                               checked={isSubSelected}
                               onChange={() => onToggleSubOption(sub.id)}
-                              className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                              className="h-4 w-4 rounded border-gray-300 accent-primary-600 focus:ring-primary-500"
                             />
                             <span className="text-sm text-gray-700">
                               {sub.name}
