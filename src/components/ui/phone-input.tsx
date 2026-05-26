@@ -23,9 +23,6 @@ const COUNTRIES: Country[] = [
   { code: "PT", flag: "🇵🇹", name: "Portugal", dialCode: "+351", pattern: "### ### ###", maxLength: 9 },
   { code: "GB", flag: "🇬🇧", name: "Royaume-Uni", dialCode: "+44", pattern: "#### ######", maxLength: 10 },
   { code: "US", flag: "🇺🇸", name: "États-Unis", dialCode: "+1", pattern: "### ### ####", maxLength: 10 },
-  { code: "MA", flag: "🇲🇦", name: "Maroc", dialCode: "+212", pattern: "## ## ## ## ##", maxLength: 10 },
-  { code: "TN", flag: "🇹🇳", name: "Tunisie", dialCode: "+216", pattern: "## ### ###", maxLength: 8 },
-  { code: "DZ", flag: "🇩🇿", name: "Algérie", dialCode: "+213", pattern: "### ## ## ##", maxLength: 9 },
 ];
 
 function formatPhone(raw: string, pattern: string): string {
