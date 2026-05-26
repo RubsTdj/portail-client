@@ -6,6 +6,7 @@ import { useAuth, SignupData } from "@/lib/auth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AddressAutocomplete } from "@/components/ui/address-autocomplete";
+import { PhoneInput } from "@/components/ui/phone-input";
 
 export function SignupForm() {
   const { signup } = useAuth();
@@ -170,12 +171,11 @@ export function SignupForm() {
                 onChange={(value) => handleChange("address", value)}
               />
 
-              <Input
+              <PhoneInput
                 id="phone"
                 label="Téléphone"
-                placeholder="06 12 34 56 67"
                 value={form.phone}
-                onChange={(e) => handleChange("phone", e.target.value)}
+                onChange={(value) => handleChange("phone", value)}
               />
 
               <button

@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { AddressAutocomplete } from "@/components/ui/address-autocomplete";
+import { PhoneInput } from "@/components/ui/phone-input";
 import { mockUser } from "@/lib/mock-data";
 
 export default function MonProfilPage() {
@@ -75,13 +76,12 @@ export default function MonProfilPage() {
             readOnly={!isEditing}
             className={!isEditing ? "bg-gray-50" : ""}
           />
-          <Input
+          <PhoneInput
             id="phone"
             label="Téléphone"
             value={isEditing ? form.phone : user.phone}
-            onChange={(e) => handleChange("phone", e.target.value)}
+            onChange={(value) => handleChange("phone", value)}
             readOnly={!isEditing}
-            className={!isEditing ? "bg-gray-50" : ""}
           />
         </div>
 
