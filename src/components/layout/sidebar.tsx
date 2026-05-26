@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { IconHome, IconCalendar, IconMotorcycle, IconFileText, IconUser } from "@/components/ui/icons";
+import { IconHome, IconCalendar, IconMotorcycle, IconUser } from "@/components/ui/icons";
 import { useAuth } from "@/lib/auth";
 import { mockUser } from "@/lib/mock-data";
 
@@ -13,7 +13,6 @@ const navItems = [
   { href: "/accueil", label: "Accueil", Icon: IconHome },
   { href: "/mes-rdv", label: "Mes RDV", Icon: IconCalendar },
   { href: "/mes-motos", label: "Mes Motos", Icon: IconMotorcycle },
-  { href: "/mes-factures", label: "Mes Factures", Icon: IconFileText },
   { href: "/mon-profil", label: "Mon Profil", Icon: IconUser },
 ];
 

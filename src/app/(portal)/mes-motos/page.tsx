@@ -6,6 +6,8 @@ import { MotoCard } from "@/components/motos/moto-card";
 import { MotoModal, MotoFormData } from "@/components/motos/moto-modal";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { IconMotorcycle } from "@/components/ui/icons";
 import { mockMotos } from "@/lib/mock-data";
 import { Moto } from "@/lib/types";
 
@@ -54,16 +56,31 @@ export default function MesMotosPage() {
         </Button>
       </PageHeader>
 
-      <div className="flex flex-col gap-3">
-        {motos.map((moto) => (
-          <MotoCard
-            key={moto.id}
-            moto={moto}
-            onEdit={(m) => setEditingMoto(m)}
-            onDelete={(m) => setDeletingMoto(m)}
-          />
-        ))}
-      </div>
+      {motos.length === 0 ? (
+        <Card className="flex flex-col items-center justify-center py-16 text-center">
+          <IconMotorcycle size={40} className="text-gray-300 mb-3" />
+          <p className="text-sm text-gray-900 font-medium mb-1">
+            Aucune moto enregistrée
+          </p>
+          <p className="text-sm text-gray-500 mb-5">
+            Ajoutez votre première moto pour pouvoir prendre rendez-vous.
+          </p>
+          <Button variant="primary" onClick={() => setIsModalOpen(true)}>
+            + Ajouter une moto
+          </Button>
+        </Card>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {motos.map((moto) => (
+            <MotoCard
+              key={moto.id}
+              moto={moto}
+              onEdit={(m) => setEditingMoto(m)}
+              onDelete={(m) => setDeletingMoto(m)}
+            />
+          ))}
+        </div>
+      )}
 
       <MotoModal
         isOpen={isModalOpen}
