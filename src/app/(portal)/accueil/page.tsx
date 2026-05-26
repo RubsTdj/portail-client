@@ -17,9 +17,9 @@ export default function AccueilPage() {
   const nextAppointment = upcomingAppointments[0] || null;
 
   return (
-    <div className="mx-auto max-w-4xl py-4 lg:py-0">
-      <div className="mb-6 lg:mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">
+    <div>
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">
           Bonjour {mockUser.firstName} 👋
         </h1>
         <p className="mt-1 text-sm text-gray-500">
@@ -27,28 +27,28 @@ export default function AccueilPage() {
         </p>
       </div>
 
-      <div className="mb-6 lg:mb-8">
+      <div className="mb-6">
         <NextAppointmentCard appointment={nextAppointment} />
       </div>
 
-      <div className="grid grid-cols-2 gap-3 lg:gap-5 mb-6 lg:mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-6">
         <StatCard
-          icon={<IconCalendar size={28} />}
+          icon={<IconCalendar size={24} />}
           value={upcomingAppointments.length}
           label="RDV à venir"
         />
         <StatCard
-          icon={<IconMotorcycle size={28} />}
+          icon={<IconMotorcycle size={24} />}
           value={mockMotos.length}
           label="Mes motos"
         />
         <StatCard
-          icon={<IconFileText size={28} />}
+          icon={<IconFileText size={24} />}
           value={mockInvoices.length}
           label="Factures"
         />
         <StatCard
-          icon={<IconCheckCircle size={28} />}
+          icon={<IconCheckCircle size={24} />}
           value={pastAppointments.length}
           label="RDV passés"
         />

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PageHeader } from "@/components/layout/page-header";
 import { Avatar } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -24,10 +25,10 @@ export default function MonProfilPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl py-4 lg:py-0">
-      <h1 className="mb-6 text-2xl lg:text-3xl font-bold text-gray-900">Mon Profil</h1>
+    <div>
+      <PageHeader title="Mon Profil" />
 
-      <Card className="px-4 py-6 sm:px-8 sm:py-10">
+      <Card className="px-5 py-8 sm:px-8">
         <div className="flex justify-center mb-8">
           <Avatar
             firstName={user.firstName}
@@ -36,7 +37,7 @@ export default function MonProfilPage() {
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Input
             id="firstName"
             label="Prénom"
@@ -53,21 +54,17 @@ export default function MonProfilPage() {
             readOnly={!isEditing}
             className={!isEditing ? "bg-gray-50" : ""}
           />
-        </div>
-
-        <div className="mt-4 sm:mt-6">
-          <Input
-            id="email"
-            label="Email"
-            type="email"
-            value={isEditing ? form.email : user.email}
-            onChange={(e) => handleChange("email", e.target.value)}
-            readOnly={!isEditing}
-            className={!isEditing ? "bg-gray-50" : ""}
-          />
-        </div>
-
-        <div className="mt-4 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          <div className="sm:col-span-2">
+            <Input
+              id="email"
+              label="Email"
+              type="email"
+              value={isEditing ? form.email : user.email}
+              onChange={(e) => handleChange("email", e.target.value)}
+              readOnly={!isEditing}
+              className={!isEditing ? "bg-gray-50" : ""}
+            />
+          </div>
           <AddressAutocomplete
             id="address"
             label="Adresse"

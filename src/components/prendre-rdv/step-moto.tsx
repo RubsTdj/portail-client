@@ -2,7 +2,7 @@
 
 import { Moto } from "@/lib/types";
 import { Card } from "@/components/ui/card";
-import { IconMotorcycle } from "@/components/ui/icons";
+import { IconMotorcycle, IconPlus } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
 interface StepMotoProps {
@@ -35,17 +35,20 @@ export function StepMoto({
               key={moto.id}
               hoverable
               selected={isSelected}
-              className={cn("flex items-center justify-between", isSelected && "border-primary-500")}
+              className="flex items-center justify-between"
               onClick={() => onSelect(moto.id)}
             >
               <div className="flex items-center gap-4">
-                <IconMotorcycle size={22} className="text-gray-400" />
+                <IconMotorcycle
+                  size={22}
+                  className={isSelected ? "text-primary-600" : "text-gray-500"}
+                />
                 <div>
                   <p className="font-semibold text-gray-900">
                     {moto.brand} - {moto.model}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {moto.year}- {moto.displacement} cc
+                    {moto.year} - {moto.displacement} cc
                   </p>
                   <span className="inline-flex items-center rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-600 mt-1">
                     {moto.licensePlate}
@@ -54,9 +57,9 @@ export function StepMoto({
               </div>
               <div
                 className={cn(
-                  "h-5 w-5 rounded-full border-2",
+                  "h-5 w-5 rounded-full border-2 shrink-0 transition-colors",
                   isSelected
-                    ? "border-primary-500 bg-primary-500"
+                    ? "border-primary-600 bg-primary-600"
                     : "border-gray-300"
                 )}
               />
@@ -70,8 +73,8 @@ export function StepMoto({
           className="flex flex-col items-center justify-center py-6 cursor-pointer"
           onClick={onAddMoto}
         >
-          <span className="text-xl text-primary-500 mb-1">⊕</span>
-          <span className="text-sm font-medium text-primary-500">
+          <IconPlus size={22} className="text-primary-600 mb-1" />
+          <span className="text-sm font-semibold text-primary-600">
             Ajouter une moto
           </span>
         </Card>

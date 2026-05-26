@@ -1,20 +1,22 @@
 "use client";
 
+import { PageHeader } from "@/components/layout/page-header";
 import { mockInvoices } from "@/lib/mock-data";
 import { Card } from "@/components/ui/card";
+import { IconFileText } from "@/components/ui/icons";
 
 export default function MesFacturesPage() {
   return (
-    <div className="mx-auto max-w-4xl py-4 lg:py-0">
-      <h1 className="mb-6 text-2xl lg:text-3xl font-bold text-gray-900">Mes Factures</h1>
+    <div>
+      <PageHeader title="Mes Factures" />
 
       {mockInvoices.length === 0 ? (
         <Card className="flex flex-col items-center justify-center py-16">
-          <span className="text-4xl mb-4">📄</span>
-          <p className="text-gray-500">Aucune facture pour le moment.</p>
+          <IconFileText size={40} className="text-gray-300 mb-3" />
+          <p className="text-sm text-gray-500">Aucune facture pour le moment.</p>
         </Card>
       ) : (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           {mockInvoices.map((invoice) => (
             <Card key={invoice.id} className="flex items-center justify-between">
               <div>

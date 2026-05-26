@@ -11,9 +11,9 @@ interface RdvCardProps {
 function getStatusDisplay(status: string) {
   switch (status) {
     case "planifie":
-      return { label: "Planifié", color: "text-primary-500" };
+      return { label: "Planifié", color: "text-primary-600" };
     case "annule":
-      return { label: "Annulé", color: "text-primary-500" };
+      return { label: "Annulé", color: "text-primary-600" };
     case "termine":
       return { label: "Terminé", color: "text-emerald-500" };
     default:
@@ -37,7 +37,7 @@ export function RdvCard({ appointment }: RdvCardProps) {
           {appointment.service}
         </p>
         <div className="mt-2 flex items-center gap-2 text-sm text-gray-500">
-          <IconCalendar size={16} className="text-gray-400" />
+          <IconCalendar size={16} className="text-gray-500" />
           <span>{formatDate(appointment.date)}</span>
         </div>
       </div>

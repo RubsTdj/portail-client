@@ -15,7 +15,7 @@ export function MotoCard({ moto, onEdit, onDelete }: MotoCardProps) {
   return (
     <Card className="flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <IconMotorcycle size={28} className="text-gray-400 shrink-0 hidden sm:block" />
+        <IconMotorcycle size={28} className="text-gray-500 shrink-0 hidden sm:block" />
         <div>
           <p className="text-base font-semibold text-gray-900">
             {moto.brand} - {moto.model}

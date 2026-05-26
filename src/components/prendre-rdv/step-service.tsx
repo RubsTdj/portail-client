@@ -39,7 +39,7 @@ export function StepService({
               key={service.id}
               hoverable
               selected={isSelected}
-              className={cn("cursor-pointer", isSelected && "border-primary-500")}
+              className={cn("cursor-pointer", isSelected && "border-primary-600")}
               onClick={() => onSelect(service.id)}
             >
               <div className="flex items-center justify-between">
@@ -52,7 +52,7 @@ export function StepService({
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2.5"
-                    className="text-primary-500"
+                    className="text-primary-600"
                   >
                     <polyline points="20 6 9 17 4 12" />
                   </svg>

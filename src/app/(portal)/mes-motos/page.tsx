@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PageHeader } from "@/components/layout/page-header";
 import { MotoCard } from "@/components/motos/moto-card";
 import { MotoModal, MotoFormData } from "@/components/motos/moto-modal";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
@@ -46,15 +47,14 @@ export default function MesMotosPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl py-4 lg:py-0">
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">Mes Motos</h1>
+    <div>
+      <PageHeader title="Mes Motos">
         <Button variant="primary" onClick={() => setIsModalOpen(true)}>
           + Ajouter une moto
         </Button>
-      </div>
+      </PageHeader>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3">
         {motos.map((moto) => (
           <MotoCard
             key={moto.id}

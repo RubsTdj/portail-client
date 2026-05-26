@@ -60,7 +60,7 @@ export function StepCreneau({
         </div>
         <div className="bg-white px-6 py-5">
           <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
-            <span className="text-primary-500">✂️</span>
+            <span className="text-primary-600">✂️</span>
             <div>
               <p className="font-semibold text-gray-900">
                 {moto.brand} - {moto.model}
@@ -70,7 +70,7 @@ export function StepCreneau({
           </div>
 
           <div className="flex items-center gap-3 py-4 border-b border-gray-100">
-            <span className="text-primary-500">✓</span>
+            <span className="text-primary-600">✓</span>
             <p className="text-sm font-medium text-gray-900">{service.name}</p>
           </div>
 

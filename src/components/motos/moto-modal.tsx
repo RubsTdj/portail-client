@@ -55,15 +55,9 @@ function motoToForm(moto: Moto): MotoFormData {
 }
 
 const EMPTY_FORM: MotoFormData = {
-  brand: "",
-  model: "",
-  year: "",
-  displacement: "",
-  mileage: "",
-  color: "",
-  registrationDate: "",
-  licensePlate: "",
-  vin: "",
+  brand: "", model: "", year: "", displacement: "",
+  mileage: "", color: "", registrationDate: "",
+  licensePlate: "", vin: "",
 };
 
 export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
@@ -135,8 +129,10 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
       isOpen={isOpen}
       onClose={onClose}
       title={isEdit ? "Modifier la moto" : "Ajouter une moto"}
+      className="max-w-xl"
     >
-      <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
+        {/* Row 1: Marque + Modèle */}
         {brandIsOther ? (
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
@@ -148,9 +144,9 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
                   setModelIsOther(false);
                   setForm((prev) => ({ ...prev, brand: "", model: "" }));
                 }}
-                className="text-xs text-primary-500 hover:text-primary-600 font-medium transition-colors"
+                className="text-xs text-primary-500 hover:text-primary-600 font-medium"
               >
-                ← Revenir à la liste
+                ← Liste
               </button>
             </div>
             <Input
@@ -164,7 +160,7 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
           <Select
             id="brand"
             label="Marque"
-            placeholder="Sélectionnez une marque"
+            placeholder="Sélectionnez"
             options={brandOptions}
             value={form.brand}
             onChange={(e) => handleBrandChange(e.target.value)}
@@ -182,9 +178,9 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
                     setModelIsOther(false);
                     setForm((prev) => ({ ...prev, model: "" }));
                   }}
-                  className="text-xs text-primary-500 hover:text-primary-600 font-medium transition-colors"
+                  className="text-xs text-primary-500 hover:text-primary-600 font-medium"
                 >
-                  ← Revenir à la liste
+                  ← Liste
                 </button>
               )}
             </div>
@@ -199,7 +195,7 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
           <Select
             id="model"
             label="Modèle"
-            placeholder={form.brand ? "Sélectionnez un modèle" : "Sélectionnez d'abord une marque"}
+            placeholder={form.brand ? "Sélectionnez" : "Marque d'abord"}
             options={modelOptions}
             value={form.model}
             onChange={(e) => handleModelChange(e.target.value)}
@@ -207,6 +203,7 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
           />
         )}
 
+        {/* Row 2: Année + Cylindrée */}
         <Input
           id="year"
           label="Année"
@@ -217,11 +214,13 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
         <Select
           id="displacement"
           label="Cylindrée"
-          placeholder="Sélectionnez une cylindrée"
+          placeholder="Sélectionnez"
           options={displacementOptions}
           value={form.displacement}
           onChange={(e) => handleChange("displacement", e.target.value)}
         />
+
+        {/* Row 3: Kilométrage + Couleur */}
         <Input
           id="mileage"
           label="Kilométrage"
@@ -232,28 +231,32 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
         <Input
           id="color"
           label="Couleur"
-          placeholder="Ex: Rouge, Bleu, Noir..."
+          placeholder="Ex: Rouge, Noir..."
           value={form.color}
           onChange={(e) => handleChange("color", e.target.value)}
         />
+
+        {/* Row 4: Date + Plaque */}
         <Input
           id="registrationDate"
           type="date"
-          label="Date de mise en circulation"
+          label="Mise en circulation"
           value={form.registrationDate}
           onChange={(e) => handleChange("registrationDate", e.target.value)}
         />
         <Input
           id="licensePlate"
-          label="Plaque d'immatriculation"
-          placeholder="Ex: AB-123-CD"
+          label="Plaque"
+          placeholder="AB-123-CD"
           value={form.licensePlate}
           onChange={(e) => handleChange("licensePlate", e.target.value)}
         />
-        <div>
+
+        {/* Row 5: VIN (full width) */}
+        <div className="sm:col-span-2">
           <Input
             id="vin"
-            label="Numéro de série (VIN)"
+            label="N° de série (VIN)"
             placeholder="Ex: VF1RJA00056789012"
             value={form.vin}
             onChange={(e) => handleChange("vin", e.target.value)}
@@ -262,14 +265,15 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
             Disponible sur votre carte grise — champ E
           </p>
         </div>
-        <div className="mt-2 flex justify-end gap-3">
-          <Button variant="ghost" onClick={onClose}>
-            Annuler
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            {isEdit ? "Enregistrer" : "Ajouter ma moto"}
-          </Button>
-        </div>
+      </div>
+
+      <div className="mt-5 flex justify-end gap-3">
+        <Button variant="ghost" onClick={onClose}>
+          Annuler
+        </Button>
+        <Button variant="primary" onClick={handleSubmit}>
+          {isEdit ? "Enregistrer" : "Ajouter ma moto"}
+        </Button>
       </div>
     </Modal>
   );

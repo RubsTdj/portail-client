@@ -11,13 +11,13 @@ interface NextAppointmentCardProps {
 
 function StatusLabel({ status }: { status: string }) {
   const label = status === "planifie" ? "Planifié" : status === "annule" ? "Annulé" : "Terminé";
-  return <span className="text-sm font-medium text-primary-500">{label}</span>;
+  return <span className="text-sm font-medium text-primary-600">{label}</span>;
 }
 
 export function NextAppointmentCard({ appointment }: NextAppointmentCardProps) {
   if (!appointment) {
     return (
-      <div className="rounded-xl border-l-4 border-l-primary-500 border border-gray-200 bg-white p-6">
+      <div className="rounded-xl border-l-4 border-l-primary-600 border border-gray-200 bg-white p-6">
         <h3 className="text-base font-semibold text-gray-900 mb-4">
           Votre prochain rendez-vous
         </h3>
@@ -34,7 +34,7 @@ export function NextAppointmentCard({ appointment }: NextAppointmentCardProps) {
   }
 
   return (
-    <div className="rounded-xl border-l-4 border-l-primary-500 border border-gray-200 bg-white p-6">
+    <div className="rounded-xl border-l-4 border-l-primary-600 border border-gray-200 bg-white p-6">
       <h3 className="text-base font-semibold text-gray-900 mb-4">
         Votre prochain rendez-vous
       </h3>
@@ -45,7 +45,7 @@ export function NextAppointmentCard({ appointment }: NextAppointmentCardProps) {
             {appointment.service}
           </p>
           <div className="mt-2 flex items-center gap-2 text-sm text-gray-500">
-            <IconCalendar size={16} className="text-gray-400" />
+            <IconCalendar size={16} className="text-gray-500" />
             <span>{formatDate(appointment.date)}</span>
           </div>
         </div>

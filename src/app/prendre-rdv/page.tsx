@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { StepMoto } from "@/components/prendre-rdv/step-moto";
 import { StepService } from "@/components/prendre-rdv/step-service";
 import { StepCreneau } from "@/components/prendre-rdv/step-creneau";
-import { AddMotoModal, MotoFormData } from "@/components/motos/add-moto-modal";
+import { MotoModal, MotoFormData } from "@/components/motos/moto-modal";
 import { mockMotos, mockServices, mockUser } from "@/lib/mock-data";
 import { useAuth } from "@/lib/auth";
 import { Moto } from "@/lib/types";
@@ -207,7 +207,7 @@ export default function PrendreRdvPage() {
         )}
       </div>
 
-      <AddMotoModal
+      <MotoModal
         isOpen={isAddMotoOpen}
         onClose={() => setIsAddMotoOpen(false)}
         onAdd={handleAddMoto}
