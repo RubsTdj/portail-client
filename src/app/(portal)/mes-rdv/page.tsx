@@ -9,6 +9,7 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { IconCalendar } from "@/components/ui/icons";
 import { mockAppointments } from "@/lib/mock-data";
 import { Appointment } from "@/lib/types";
+import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 
 type TabId = "a_venir" | "termines" | "annules";
@@ -119,16 +120,11 @@ export default function MesRdvPage() {
         onClose={() => setCancellingId(null)}
         onConfirm={handleCancel}
         title="Annuler ce rendez-vous ?"
-        message={`Êtes-vous sûr de vouloir annuler votre rendez-vous « ${cancellingRdv?.service} » du ${cancellingRdv ? formatDateInline(cancellingRdv.date) : ""} ? Cette action est irréversible.`}
+        message={`Êtes-vous sûr de vouloir annuler votre rendez-vous « ${cancellingRdv?.service} » du ${cancellingRdv ? formatDate(cancellingRdv.date) : ""} ? Cette action est irréversible.`}
         confirmLabel="Oui, annuler"
         cancelLabel="Non, garder"
         variant="danger"
       />
     </div>
   );
-}
-
-function formatDateInline(dateStr: string): string {
-  const [y, m, d] = dateStr.split("-");
-  return `${d}/${m}/${y}`;
 }

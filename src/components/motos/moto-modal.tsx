@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { VinInput } from "@/components/ui/vin-input";
-import { DISPLACEMENTS } from "@/lib/utils";
+import { DISPLACEMENTS, sanitizePlate } from "@/lib/utils";
 import { BRAND_NAMES, getModelsForBrand } from "@/lib/moto-catalog";
 import { Moto } from "@/lib/types";
 import { validateVin } from "@/lib/moto-validation";
@@ -323,7 +323,7 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
           label="Plaque *"
           placeholder="AB-123-CD"
           value={form.licensePlate}
-          onChange={(e) => handleChange("licensePlate", e.target.value.toUpperCase())}
+          onChange={(e) => handleChange("licensePlate", sanitizePlate(e.target.value))}
           error={submitted ? errors.licensePlate : undefined}
         />
 

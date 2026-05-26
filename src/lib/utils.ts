@@ -22,6 +22,10 @@ export function formatDuration(minutes: number): string {
   return `${hours}h${mins}`;
 }
 
+export function sanitizePlate(plate: string): string {
+  return plate.trim().toUpperCase();
+}
+
 export const MOTORCYCLE_BRANDS = [
   "Aprilia",
   "Benelli",

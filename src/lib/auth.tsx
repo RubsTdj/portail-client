@@ -11,6 +11,7 @@ import {
 import { useRouter, usePathname } from "next/navigation";
 import { User } from "./types";
 import { mockUser } from "./mock-data";
+import { getStorageItem, setStorageItem, removeStorageItem, STORAGE_KEYS } from "./storage";
 
 interface AuthContextType {
   user: User | null;
@@ -41,9 +42,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem("jbf_user");
+    const stored = getStorageItem<User>(STORAGE_KEYS.USER);
     if (stored) {
-      setUser(JSON.parse(stored));
+      setUser(stored);
     }
     setChecked(true);
   }, []);
@@ -64,7 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await new Promise((r) => setTimeout(r, 500));
       const u = { ...mockUser };
       setUser(u);
-      localStorage.setItem("jbf_user", JSON.stringify(u));
+      setStorageItem(STORAGE_KEYS.USER, u);
       router.replace("/accueil");
     },
     [router]
@@ -82,7 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         address: data.address,
       };
       setUser(u);
-      localStorage.setItem("jbf_user", JSON.stringify(u));
+      setStorageItem(STORAGE_KEYS.USER, u);
       router.replace("/accueil");
     },
     [router]
@@ -90,7 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(() => {
     setUser(null);
-    localStorage.removeItem("jbf_user");
+    removeStorageItem(STORAGE_KEYS.USER);
     router.replace("/connexion");
   }, [router]);
 

@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { useEffect, useCallback } from "react";
+import { IconClose } from "@/components/ui/icons";
 
 interface ModalProps {
   isOpen: boolean;
@@ -53,19 +54,7 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
             className="ml-auto p-1 text-gray-400 hover:text-gray-600 transition-colors"
             aria-label="Fermer"
           >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <IconClose size={24} />
           </button>
         </div>
         {children}
