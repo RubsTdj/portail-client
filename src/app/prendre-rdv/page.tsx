@@ -8,7 +8,8 @@ import { StepMoto } from "@/components/prendre-rdv/step-moto";
 import { StepService } from "@/components/prendre-rdv/step-service";
 import { StepCreneau } from "@/components/prendre-rdv/step-creneau";
 import { AddMotoModal, MotoFormData } from "@/components/motos/add-moto-modal";
-import { mockMotos, mockServices } from "@/lib/mock-data";
+import { mockMotos, mockServices, mockUser } from "@/lib/mock-data";
+import { useAuth } from "@/lib/auth";
 import { Moto } from "@/lib/types";
 
 const STEPS = [
@@ -19,6 +20,8 @@ const STEPS = [
 
 export default function PrendreRdvPage() {
   const router = useRouter();
+  const { user } = useAuth();
+  const displayUser = user || mockUser;
   const [currentStep, setCurrentStep] = useState(0);
   const [motos, setMotos] = useState<Moto[]>(mockMotos);
   const [selectedMotoId, setSelectedMotoId] = useState<number | null>(null);
@@ -95,6 +98,19 @@ export default function PrendreRdvPage() {
     setSelectedMotoId(newMoto.id);
   };
 
+  const buildNotes = (): string => {
+    const parts: string[] = [];
+    if (selectedService?.name) parts.push(`Service: ${selectedService.name}`);
+    if (selectedSubOptions.length > 0 && selectedService?.subOptions) {
+      const names = selectedService.subOptions
+        .filter((s) => selectedSubOptions.includes(s.id))
+        .map((s) => s.name);
+      parts.push(`Options: ${names.join(", ")}`);
+    }
+    if (description.trim()) parts.push(`Description: ${description.trim()}`);
+    return parts.join(" | ");
+  };
+
   const handleToggleSubOption = (id: string) => {
     setSelectedSubOptions((prev) =>
       prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
@@ -162,6 +178,8 @@ export default function PrendreRdvPage() {
             moto={selectedMoto}
             service={selectedService}
             totalDuration={totalDuration}
+            user={displayUser}
+            notes={buildNotes()}
           />
         )}
       </div>
