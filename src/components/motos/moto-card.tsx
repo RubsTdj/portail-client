@@ -2,6 +2,7 @@
 
 import { Moto } from "@/lib/types";
 import { Card } from "@/components/ui/card";
+import { IconMotorcycle, IconTrash } from "@/components/ui/icons";
 import { formatDate } from "@/lib/utils";
 
 interface MotoCardProps {
@@ -13,7 +14,7 @@ export function MotoCard({ moto, onDelete }: MotoCardProps) {
   return (
     <Card className="flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <span className="text-2xl">🏍️</span>
+        <IconMotorcycle size={28} className="text-gray-400" />
         <div>
           <p className="text-base font-semibold text-gray-900">
             {moto.brand} - {moto.model}
@@ -40,19 +41,7 @@ export function MotoCard({ moto, onDelete }: MotoCardProps) {
           className="p-2 text-gray-400 hover:text-red-500 transition-colors"
           aria-label="Supprimer"
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="3 6 5 6 21 6" />
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-          </svg>
+          <IconTrash size={20} />
         </button>
       )}
     </Card>

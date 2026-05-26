@@ -2,6 +2,7 @@
 
 import { Moto } from "@/lib/types";
 import { Card } from "@/components/ui/card";
+import { IconMotorcycle } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
 interface StepMotoProps {
@@ -38,7 +39,7 @@ export function StepMoto({
               onClick={() => onSelect(moto.id)}
             >
               <div className="flex items-center gap-4">
-                <span className="text-xl">🏍️</span>
+                <IconMotorcycle size={22} className="text-gray-400" />
                 <div>
                   <p className="font-semibold text-gray-900">
                     {moto.brand} - {moto.model}

@@ -1,6 +1,7 @@
 import { Appointment } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { IconCalendar } from "@/components/ui/icons";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 
@@ -44,7 +45,7 @@ export function NextAppointmentCard({ appointment }: NextAppointmentCardProps) {
             {appointment.service}
           </p>
           <div className="mt-2 flex items-center gap-2 text-sm text-gray-500">
-            <span>📅</span>
+            <IconCalendar size={16} className="text-gray-400" />
             <span>{formatDate(appointment.date)}</span>
           </div>
         </div>

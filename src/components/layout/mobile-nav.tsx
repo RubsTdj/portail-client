@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { IconHome, IconCalendar, IconMotorcycle, IconUser, IconPlus } from "@/components/ui/icons";
 
 const navItems = [
-  { href: "/accueil", label: "Accueil", icon: "🏠" },
-  { href: "/mes-rdv", label: "RDV", icon: "📅" },
-  { href: "/mes-motos", label: "Motos", icon: "🏍️" },
-  { href: "/mon-profil", label: "Profil", icon: "👤" },
+  { href: "/accueil", label: "Accueil", Icon: IconHome },
+  { href: "/mes-rdv", label: "RDV", Icon: IconCalendar },
+  { href: "/mes-motos", label: "Motos", Icon: IconMotorcycle },
+  { href: "/mon-profil", label: "Profil", Icon: IconUser },
 ];
 
 export function MobileNav() {
@@ -25,7 +26,10 @@ export function MobileNav() {
               href={item.href}
               className="flex flex-col items-center gap-0.5 py-1.5"
             >
-              <span className="text-lg">{item.icon}</span>
+              <item.Icon
+                size={22}
+                className={isActive ? "text-primary-500" : "text-gray-400"}
+              />
               <span
                 className={cn(
                   "text-[10px] font-medium",
@@ -43,19 +47,7 @@ export function MobileNav() {
           className="-mt-5 flex items-center justify-center"
         >
           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-500 shadow-lg shadow-primary-500/30 active:bg-primary-600 transition-colors">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
+            <IconPlus size={28} className="text-white" />
           </div>
         </Link>
 
@@ -67,7 +59,10 @@ export function MobileNav() {
               href={item.href}
               className="flex flex-col items-center gap-0.5 py-1.5"
             >
-              <span className="text-lg">{item.icon}</span>
+              <item.Icon
+                size={22}
+                className={isActive ? "text-primary-500" : "text-gray-400"}
+              />
               <span
                 className={cn(
                   "text-[10px] font-medium",

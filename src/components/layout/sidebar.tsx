@@ -5,15 +5,16 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { IconHome, IconCalendar, IconMotorcycle, IconFileText, IconUser } from "@/components/ui/icons";
 import { useAuth } from "@/lib/auth";
 import { mockUser } from "@/lib/mock-data";
 
 const navItems = [
-  { href: "/accueil", label: "Accueil", icon: "🏠" },
-  { href: "/mes-rdv", label: "Mes RDV", icon: "📅" },
-  { href: "/mes-motos", label: "Mes Motos", icon: "🏍️" },
-  { href: "/mes-factures", label: "Mes Factures", icon: "📄" },
-  { href: "/mon-profil", label: "Mon Profil", icon: "👤" },
+  { href: "/accueil", label: "Accueil", Icon: IconHome },
+  { href: "/mes-rdv", label: "Mes RDV", Icon: IconCalendar },
+  { href: "/mes-motos", label: "Mes Motos", Icon: IconMotorcycle },
+  { href: "/mes-factures", label: "Mes Factures", Icon: IconFileText },
+  { href: "/mon-profil", label: "Mon Profil", Icon: IconUser },
 ];
 
 export function Sidebar() {
@@ -49,11 +50,14 @@ export function Sidebar() {
                   className={cn(
                     "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                     isActive
-                      ? "bg-gray-50 text-gray-900"
+                      ? "bg-primary-50 text-primary-700"
                       : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                   )}
                 >
-                  <span className="text-base">{item.icon}</span>
+                  <item.Icon
+                    size={18}
+                    className={isActive ? "text-primary-600" : "text-gray-400"}
+                  />
                   {item.label}
                 </Link>
               </li>
@@ -70,7 +74,7 @@ export function Sidebar() {
         </Link>
       </div>
 
-      <div className="px-5 pb-6">
+      <div className="px-5 pb-6 text-center">
         <button
           onClick={logout}
           className="text-sm text-gray-500 underline hover:text-gray-700 transition-colors"
