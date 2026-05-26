@@ -5,7 +5,8 @@ import { Modal } from "@/components/ui/modal";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { MOTORCYCLE_BRANDS, DISPLACEMENTS } from "@/lib/utils";
+import { DISPLACEMENTS } from "@/lib/utils";
+import { BRAND_NAMES, getModelsForBrand } from "@/lib/moto-catalog";
 
 interface AddMotoModalProps {
   isOpen: boolean;
@@ -25,7 +26,13 @@ export interface MotoFormData {
   vin: string;
 }
 
-const brandOptions = MOTORCYCLE_BRANDS.map((b) => ({ value: b, label: b }));
+const OTHER_VALUE = "__autre__";
+
+const brandOptions = [
+  ...BRAND_NAMES.map((b) => ({ value: b, label: b })),
+  { value: OTHER_VALUE, label: "Autre" },
+];
+
 const displacementOptions = DISPLACEMENTS.map((d) => ({
   value: String(d),
   label: `${d} cc`,
@@ -44,12 +51,48 @@ export function AddMotoModal({ isOpen, onClose, onAdd }: AddMotoModalProps) {
     vin: "",
   });
 
+  const [brandIsOther, setBrandIsOther] = useState(false);
+  const [modelIsOther, setModelIsOther] = useState(false);
+
+  const models = brandIsOther ? [] : getModelsForBrand(form.brand);
+  const modelOptions = [
+    ...models.map((m) => ({ value: m, label: m })),
+    { value: OTHER_VALUE, label: "Autre" },
+  ];
+
+  const handleBrandChange = (value: string) => {
+    if (value === OTHER_VALUE) {
+      setBrandIsOther(true);
+      setModelIsOther(true);
+      setForm((prev) => ({ ...prev, brand: "", model: "" }));
+    } else {
+      setBrandIsOther(false);
+      setModelIsOther(false);
+      setForm((prev) => ({ ...prev, brand: value, model: "" }));
+    }
+  };
+
+  const handleModelChange = (value: string) => {
+    if (value === OTHER_VALUE) {
+      setModelIsOther(true);
+      setForm((prev) => ({ ...prev, model: "" }));
+    } else {
+      setModelIsOther(false);
+      setForm((prev) => ({ ...prev, model: value }));
+    }
+  };
+
   const handleChange = (field: keyof MotoFormData, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = () => {
     onAdd(form);
+    resetForm();
+    onClose();
+  };
+
+  const resetForm = () => {
     setForm({
       brand: "",
       model: "",
@@ -61,20 +104,96 @@ export function AddMotoModal({ isOpen, onClose, onAdd }: AddMotoModalProps) {
       licensePlate: "",
       vin: "",
     });
+    setBrandIsOther(false);
+    setModelIsOther(false);
+  };
+
+  const handleClose = () => {
+    resetForm();
     onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Ajouter une moto">
+    <Modal isOpen={isOpen} onClose={handleClose} title="Ajouter une moto">
       <div className="flex flex-col gap-4">
-        <Select
-          id="brand"
-          label="Marque"
-          placeholder="Sélectionnez une marque"
-          options={brandOptions}
-          value={form.brand}
-          onChange={(e) => handleChange("brand", e.target.value)}
-        />
+        {brandIsOther ? (
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium text-gray-700">
+                Marque
+              </label>
+              <button
+                type="button"
+                onClick={() => {
+                  setBrandIsOther(false);
+                  setModelIsOther(false);
+                  setForm((prev) => ({ ...prev, brand: "", model: "" }));
+                }}
+                className="text-xs text-primary-500 hover:text-primary-600 font-medium transition-colors"
+              >
+                ← Revenir à la liste
+              </button>
+            </div>
+            <Input
+              id="brand-custom"
+              placeholder="Saisissez la marque"
+              value={form.brand}
+              onChange={(e) => handleChange("brand", e.target.value)}
+            />
+          </div>
+        ) : (
+          <Select
+            id="brand"
+            label="Marque"
+            placeholder="Sélectionnez une marque"
+            options={brandOptions}
+            value={form.brand}
+            onChange={(e) => handleBrandChange(e.target.value)}
+          />
+        )}
+
+        {modelIsOther ? (
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium text-gray-700">
+                Modèle
+              </label>
+              {!brandIsOther && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setModelIsOther(false);
+                    setForm((prev) => ({ ...prev, model: "" }));
+                  }}
+                  className="text-xs text-primary-500 hover:text-primary-600 font-medium transition-colors"
+                >
+                  ← Revenir à la liste
+                </button>
+              )}
+            </div>
+            <Input
+              id="model-custom"
+              placeholder="Saisissez le modèle"
+              value={form.model}
+              onChange={(e) => handleChange("model", e.target.value)}
+            />
+          </div>
+        ) : (
+          <Select
+            id="model"
+            label="Modèle"
+            placeholder={
+              form.brand
+                ? "Sélectionnez un modèle"
+                : "Sélectionnez d'abord une marque"
+            }
+            options={modelOptions}
+            value={form.model}
+            onChange={(e) => handleModelChange(e.target.value)}
+            disabled={!form.brand}
+          />
+        )}
+
         <Input
           id="year"
           label="Année"
@@ -131,7 +250,7 @@ export function AddMotoModal({ isOpen, onClose, onAdd }: AddMotoModalProps) {
           </p>
         </div>
         <div className="mt-2 flex justify-end gap-3">
-          <Button variant="ghost" onClick={onClose}>
+          <Button variant="ghost" onClick={handleClose}>
             Annuler
           </Button>
           <Button variant="primary" onClick={handleSubmit}>

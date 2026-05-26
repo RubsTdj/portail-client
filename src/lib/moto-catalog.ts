@@ -1,0 +1,125 @@
+export const MOTO_CATALOG: Record<string, string[]> = {
+  "Aprilia": [
+    "RS 125", "RS 660", "RSV4", "RSV4 Factory",
+    "Tuono 660", "Tuono V4", "Shiver 900",
+    "Dorsoduro 900", "SX 125", "RX 125",
+  ],
+  "Benelli": [
+    "TRK 502", "TRK 502 X", "Leoncino 500",
+    "Leoncino 800", "752 S", "502 C",
+  ],
+  "BMW": [
+    "S 1000 RR", "S 1000 R", "S 1000 XR",
+    "R 1250 GS", "R 1250 GS Adventure", "R 1250 RT",
+    "R 1250 RS", "R nineT", "F 900 R", "F 900 XR",
+    "F 850 GS", "F 850 GS Adventure", "F 750 GS",
+    "G 310 R", "G 310 GS", "C 400 X", "C 400 GT",
+    "CE 04", "R 18", "R 18 Classic",
+  ],
+  "Ducati": [
+    "Panigale V4", "Panigale V4 S", "Panigale V2",
+    "Streetfighter V4", "Streetfighter V2",
+    "Monster", "Monster SP",
+    "Multistrada V4", "Multistrada V4 S", "Multistrada V2",
+    "Diavel V4", "XDiavel",
+    "Scrambler Icon", "Scrambler Full Throttle", "Scrambler Desert Sled",
+    "Hypermotard 950", "SuperSport 950",
+    "DesertX", "DesertX Rally",
+  ],
+  "Harley-Davidson": [
+    "Sportster S", "Nightster",
+    "Street Bob 114", "Fat Bob 114", "Fat Boy 114",
+    "Road Glide", "Street Glide", "Road King",
+    "Electra Glide", "Pan America 1250",
+    "Breakout 117", "Heritage Classic 114",
+    "Low Rider S", "Low Rider ST",
+  ],
+  "Honda": [
+    "CBR 1000 RR-R", "CBR 650 R", "CBR 500 R", "CBR 300 R", "CBR 125 R",
+    "CB 1000 R", "CB 650 R", "CB 500 F", "CB 300 R", "CB 125 R",
+    "Africa Twin", "Africa Twin Adventure Sports",
+    "NC 750 X", "X-ADV", "Forza 750", "Forza 350", "Forza 125",
+    "NT 1100", "Rebel 1100", "Rebel 500",
+    "CRF 1100 L", "CRF 300 L", "MSX 125 Grom",
+    "PCX 125", "SH 125", "SH 350",
+  ],
+  "Husqvarna": [
+    "Norden 901", "Svartpilen 401", "Svartpilen 125",
+    "Vitpilen 401", "Vitpilen 125",
+    "701 Supermoto", "701 Enduro",
+    "FE 350", "FE 450", "FE 501",
+    "TE 150i", "TE 250i", "TE 300i",
+  ],
+  "Indian": [
+    "Scout", "Scout Bobber", "Scout Rogue",
+    "Chief", "Chief Bobber", "Super Chief",
+    "Chieftain", "Roadmaster", "Challenger",
+    "FTR 1200", "FTR Rally",
+    "Pursuit", "Springfield",
+  ],
+  "Kawasaki": [
+    "Ninja ZX-10R", "Ninja ZX-6R", "Ninja 650", "Ninja 400", "Ninja 125",
+    "Z H2", "Z 900", "Z 650", "Z 400", "Z 125",
+    "Versys 1000", "Versys 650",
+    "Vulcan S",
+    "W800", "KLX 300", "KLR 650",
+    "ZX-4RR", "Eliminator",
+  ],
+  "KTM": [
+    "1290 Super Duke R", "890 Duke R", "790 Duke",
+    "390 Duke", "250 Duke", "125 Duke",
+    "1290 Super Adventure", "890 Adventure", "390 Adventure",
+    "RC 390", "RC 125",
+    "450 EXC-F", "350 EXC-F", "300 EXC",
+    "450 SX-F", "350 SX-F", "250 SX-F", "125 SX",
+  ],
+  "Moto Guzzi": [
+    "V100 Mandello", "V85 TT", "V7",
+    "V9 Bobber", "V9 Roamer",
+    "Stelvio", "Norge",
+  ],
+  "MV Agusta": [
+    "F3 800", "F3 675",
+    "Brutale 1000", "Brutale 800", "Brutale 675",
+    "Turismo Veloce 800",
+    "Dragster 800", "Superveloce",
+  ],
+  "Royal Enfield": [
+    "Continental GT 650", "Interceptor 650",
+    "Himalayan", "Scram 411",
+    "Classic 350", "Meteor 350", "Hunter 350",
+    "Super Meteor 650",
+  ],
+  "Suzuki": [
+    "GSX-R 1000", "GSX-R 750", "GSX-R 600", "GSX-R 125",
+    "GSX-S 1000", "GSX-S 950", "GSX-S 750", "GSX-S 125",
+    "V-Strom 1050", "V-Strom 800", "V-Strom 650", "V-Strom 250",
+    "Hayabusa", "Katana",
+    "SV 650", "DR-Z 400",
+    "Burgman 400", "Burgman 125",
+  ],
+  "Triumph": [
+    "Speed Triple 1200", "Street Triple 765",
+    "Tiger 1200", "Tiger 900", "Tiger 850 Sport",
+    "Trident 660", "Speed Twin 1200", "Speed Twin 900",
+    "Bonneville T120", "Bonneville T100",
+    "Scrambler 1200", "Scrambler 900",
+    "Rocket 3", "Thruxton RS",
+    "Street Scrambler", "Speed 400", "Scrambler 400 X",
+  ],
+  "Yamaha": [
+    "YZF-R1", "YZF-R7", "YZF-R6", "YZF-R3", "YZF-R125",
+    "MT-10", "MT-09", "MT-07", "MT-03", "MT-125",
+    "Tracer 9", "Tracer 7",
+    "Ténéré 700", "XSR 900", "XSR 700", "XSR 125",
+    "NIKEN", "VMAX",
+    "XMAX 300", "XMAX 125", "TMAX 560",
+    "FZ", "XJ6",
+  ],
+};
+
+export const BRAND_NAMES = Object.keys(MOTO_CATALOG).sort();
+
+export function getModelsForBrand(brand: string): string[] {
+  return MOTO_CATALOG[brand] || [];
+}
