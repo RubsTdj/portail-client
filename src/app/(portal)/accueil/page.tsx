@@ -16,8 +16,8 @@ export default function AccueilPage() {
   const nextAppointment = upcomingAppointments[0] || null;
 
   return (
-    <div className="mx-auto max-w-4xl">
-      <div className="mb-8">
+    <div className="mx-auto max-w-4xl py-4 lg:py-0">
+      <div className="mb-6 lg:mb-8">
         <h1 className="text-3xl font-bold text-gray-900">
           Bonjour {mockUser.firstName} 👋
         </h1>
@@ -26,11 +26,11 @@ export default function AccueilPage() {
         </p>
       </div>
 
-      <div className="mb-8">
+      <div className="mb-6 lg:mb-8">
         <NextAppointmentCard appointment={nextAppointment} />
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-8">
+      <div className="grid grid-cols-2 gap-3 lg:gap-4 mb-6 lg:mb-8">
         <StatCard
           icon="📅"
           value={upcomingAppointments.length}
@@ -53,7 +53,7 @@ export default function AccueilPage() {
         />
       </div>
 
-      <Link href="/prendre-rdv" className="block">
+      <Link href="/prendre-rdv" className="hidden lg:block">
         <Button variant="primary" size="xl" fullWidth className="rounded-xl">
           PRENDRE UN RENDEZ-VOUS →
         </Button>

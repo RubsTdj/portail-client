@@ -32,9 +32,9 @@ export default function MesMotosPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Mes Motos</h1>
+    <div className="mx-auto max-w-4xl py-4 lg:py-0">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">Mes Motos</h1>
         <Button variant="primary" onClick={() => setIsModalOpen(true)}>
           + Ajouter une moto
         </Button>

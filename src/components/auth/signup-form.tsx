@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useAuth, SignupData } from "@/lib/auth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { AddressAutocomplete } from "@/components/ui/address-autocomplete";
 
 export function SignupForm() {
   const { signup } = useAuth();
@@ -161,12 +162,12 @@ export function SignupForm() {
                 </p>
               </div>
 
-              <Input
+              <AddressAutocomplete
                 id="address"
                 label="Adresse"
                 placeholder="391 Rue de l'artisanat, 74330 Poisy"
                 value={form.address}
-                onChange={(e) => handleChange("address", e.target.value)}
+                onChange={(value) => handleChange("address", value)}
               />
 
               <Input

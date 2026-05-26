@@ -5,8 +5,8 @@ import { Card } from "@/components/ui/card";
 
 export default function MesFacturesPage() {
   return (
-    <div className="mx-auto max-w-4xl">
-      <h1 className="mb-6 text-3xl font-bold text-gray-900">Mes Factures</h1>
+    <div className="mx-auto max-w-4xl py-4 lg:py-0">
+      <h1 className="mb-6 text-2xl lg:text-3xl font-bold text-gray-900">Mes Factures</h1>
 
       {mockInvoices.length === 0 ? (
         <Card className="flex flex-col items-center justify-center py-16">

@@ -22,7 +22,7 @@ export function Sidebar() {
   const displayUser = user || mockUser;
 
   return (
-    <aside className="fixed left-0 top-0 z-40 flex h-screen w-[220px] flex-col border-r border-gray-100 bg-white">
+    <aside className="fixed left-0 top-0 z-40 hidden h-screen w-[220px] flex-col border-r border-gray-100 bg-white lg:flex">
       <div className="px-5 pt-6 pb-4">
         <h1 className="text-lg font-bold text-gray-900">JBF Motos ///</h1>
       </div>

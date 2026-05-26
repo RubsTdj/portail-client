@@ -5,6 +5,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { AddressAutocomplete } from "@/components/ui/address-autocomplete";
 import { mockUser } from "@/lib/mock-data";
 
 export default function MonProfilPage() {
@@ -22,10 +23,10 @@ export default function MonProfilPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl">
-      <h1 className="mb-6 text-3xl font-bold text-gray-900">Mon Profil</h1>
+    <div className="mx-auto max-w-4xl py-4 lg:py-0">
+      <h1 className="mb-6 text-2xl lg:text-3xl font-bold text-gray-900">Mon Profil</h1>
 
-      <Card className="px-8 py-10">
+      <Card className="px-4 py-6 sm:px-8 sm:py-10">
         <div className="flex justify-center mb-8">
           <Avatar
             firstName={user.firstName}
@@ -34,7 +35,7 @@ export default function MonProfilPage() {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           <Input
             id="firstName"
             label="Prénom"
@@ -53,7 +54,7 @@ export default function MonProfilPage() {
           />
         </div>
 
-        <div className="mt-6">
+        <div className="mt-4 sm:mt-6">
           <Input
             id="email"
             label="Email"
@@ -65,12 +66,12 @@ export default function MonProfilPage() {
           />
         </div>
 
-        <div className="mt-6 grid grid-cols-2 gap-6">
-          <Input
+        <div className="mt-4 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          <AddressAutocomplete
             id="address"
             label="Adresse"
             value={isEditing ? form.address : user.address}
-            onChange={(e) => handleChange("address", e.target.value)}
+            onChange={(value) => handleChange("address", value)}
             readOnly={!isEditing}
             className={!isEditing ? "bg-gray-50" : ""}
           />

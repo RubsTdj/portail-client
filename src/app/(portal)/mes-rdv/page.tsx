@@ -9,8 +9,8 @@ export default function MesRdvPage() {
   );
 
   return (
-    <div className="mx-auto max-w-4xl">
-      <h1 className="mb-6 text-3xl font-bold text-gray-900">
+    <div className="mx-auto max-w-4xl py-4 lg:py-0">
+      <h1 className="mb-6 text-2xl lg:text-3xl font-bold text-gray-900">
         Mes Rendez-vous
       </h1>
       <div className="flex flex-col gap-4">
