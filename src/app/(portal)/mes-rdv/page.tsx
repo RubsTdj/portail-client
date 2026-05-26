@@ -5,24 +5,32 @@ import { PageHeader } from "@/components/layout/page-header";
 import { RdvCard } from "@/components/rdv/rdv-card";
 import { Tabs } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { IconCalendar } from "@/components/ui/icons";
 import { mockAppointments } from "@/lib/mock-data";
+import { Appointment } from "@/lib/types";
 import Link from "next/link";
 
 type TabId = "a_venir" | "termines" | "annules";
 
 export default function MesRdvPage() {
   const [activeTab, setActiveTab] = useState<TabId>("a_venir");
+  const [appointments, setAppointments] = useState<Appointment[]>(mockAppointments);
+  const [cancellingId, setCancellingId] = useState<string | null>(null);
 
-  const upcoming = mockAppointments
+  const cancellingRdv = cancellingId
+    ? appointments.find((a) => a.id === cancellingId)
+    : null;
+
+  const upcoming = appointments
     .filter((a) => a.status === "planifie" && new Date(a.date) >= new Date())
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-  const past = mockAppointments
+  const past = appointments
     .filter((a) => a.status === "termine")
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  const cancelled = mockAppointments
+  const cancelled = appointments
     .filter((a) => a.status === "annule")
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
@@ -38,6 +46,24 @@ export default function MesRdvPage() {
       : activeTab === "termines"
         ? past
         : cancelled;
+
+  const handleCancel = () => {
+    if (!cancellingId) return;
+    setAppointments((prev) =>
+      prev.map((a) =>
+        a.id === cancellingId ? { ...a, status: "annule" as const } : a
+      )
+    );
+    setCancellingId(null);
+  };
+
+  const handleReschedule = (id: string) => {
+    const rdv = appointments.find((a) => a.id === id);
+    if (!rdv) return;
+    alert(
+      "En production, cette action redirigera vers Cal.com pour reprogrammer votre rendez-vous."
+    );
+  };
 
   return (
     <div>
@@ -70,10 +96,39 @@ export default function MesRdvPage() {
       ) : (
         <div className="flex flex-col gap-3">
           {displayed.map((appointment) => (
-            <RdvCard key={appointment.id} appointment={appointment} />
+            <RdvCard
+              key={appointment.id}
+              appointment={appointment}
+              onCancel={
+                appointment.status === "planifie"
+                  ? (id) => setCancellingId(id)
+                  : undefined
+              }
+              onReschedule={
+                appointment.status === "planifie"
+                  ? handleReschedule
+                  : undefined
+              }
+            />
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        isOpen={!!cancellingId}
+        onClose={() => setCancellingId(null)}
+        onConfirm={handleCancel}
+        title="Annuler ce rendez-vous ?"
+        message={`Êtes-vous sûr de vouloir annuler votre rendez-vous « ${cancellingRdv?.service} » du ${cancellingRdv ? formatDateInline(cancellingRdv.date) : ""} ? Cette action est irréversible.`}
+        confirmLabel="Oui, annuler"
+        cancelLabel="Non, garder"
+        variant="danger"
+      />
     </div>
   );
+}
+
+function formatDateInline(dateStr: string): string {
+  const [y, m, d] = dateStr.split("-");
+  return `${d}/${m}/${y}`;
 }

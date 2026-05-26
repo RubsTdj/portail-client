@@ -2,8 +2,9 @@
 
 import { Moto } from "@/lib/types";
 import { Card } from "@/components/ui/card";
-import { IconMotorcycle, IconTrash, IconEdit } from "@/components/ui/icons";
+import { IconMotorcycle, IconTrash, IconEdit, IconCheckCircle } from "@/components/ui/icons";
 import { formatDate } from "@/lib/utils";
+import { isMotoComplete, getMotoCompletionFields } from "@/lib/moto-validation";
 
 interface MotoCardProps {
   moto: Moto;
@@ -12,14 +13,29 @@ interface MotoCardProps {
 }
 
 export function MotoCard({ moto, onEdit, onDelete }: MotoCardProps) {
+  const complete = isMotoComplete(moto);
+  const missingFields = getMotoCompletionFields(moto);
+
   return (
     <Card className="flex items-center justify-between">
       <div className="flex items-center gap-4">
         <IconMotorcycle size={28} className="text-gray-500 shrink-0 hidden sm:block" />
         <div>
-          <p className="text-base font-semibold text-gray-900">
-            {moto.brand} - {moto.model}
-          </p>
+          <div className="flex items-center gap-2">
+            <p className="text-base font-semibold text-gray-900">
+              {moto.brand} - {moto.model}
+            </p>
+            {complete ? (
+              <IconCheckCircle size={16} className="text-emerald-500 shrink-0" />
+            ) : (
+              <span
+                className="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold text-amber-700"
+                title={`Champs manquants : ${missingFields.join(", ")}`}
+              >
+                Incomplet
+              </span>
+            )}
+          </div>
           <p className="text-sm text-gray-500">
             {moto.year} - {formatDate(moto.registrationDate)}
           </p>
@@ -40,7 +56,7 @@ export function MotoCard({ moto, onEdit, onDelete }: MotoCardProps) {
         {onEdit && (
           <button
             onClick={() => onEdit(moto)}
-            className="p-2 text-gray-400 hover:text-primary-500 transition-colors"
+            className="p-2 text-gray-400 hover:text-primary-600 transition-colors"
             aria-label="Modifier"
           >
             <IconEdit size={18} />

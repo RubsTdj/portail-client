@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { DISPLACEMENTS } from "@/lib/utils";
 import { BRAND_NAMES, getModelsForBrand } from "@/lib/moto-catalog";
 import { Moto } from "@/lib/types";
+import { validateVin } from "@/lib/moto-validation";
 
 export interface MotoFormData {
   brand: string;
@@ -63,6 +64,7 @@ const EMPTY_FORM: MotoFormData = {
 export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
   const isEdit = !!moto;
   const [form, setForm] = useState<MotoFormData>(EMPTY_FORM);
+  const [vinError, setVinError] = useState<string | null>(null);
   const [brandIsOther, setBrandIsOther] = useState(false);
   const [modelIsOther, setModelIsOther] = useState(false);
 
@@ -117,9 +119,20 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
 
   const handleChange = (field: keyof MotoFormData, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
+    if (field === "vin" || field === "year") {
+      setVinError(null);
+    }
   };
 
   const handleSubmit = () => {
+    const year = parseInt(form.year) || 0;
+    if (form.vin) {
+      const error = validateVin(form.vin, year);
+      if (error) {
+        setVinError(error);
+        return;
+      }
+    }
     onSubmit(form);
     onClose();
   };
@@ -259,11 +272,14 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
             label="N° de série (VIN)"
             placeholder="Ex: VF1RJA00056789012"
             value={form.vin}
-            onChange={(e) => handleChange("vin", e.target.value)}
+            onChange={(e) => handleChange("vin", e.target.value.toUpperCase())}
+            error={vinError || undefined}
           />
-          <p className="mt-1 text-xs text-gray-400">
-            Disponible sur votre carte grise — champ E
-          </p>
+          {!vinError && (
+            <p className="mt-1 text-xs text-gray-400">
+              Disponible sur votre carte grise — champ E
+            </p>
+          )}
         </div>
       </div>
 
