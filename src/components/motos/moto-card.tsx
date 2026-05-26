@@ -2,19 +2,20 @@
 
 import { Moto } from "@/lib/types";
 import { Card } from "@/components/ui/card";
-import { IconMotorcycle, IconTrash } from "@/components/ui/icons";
+import { IconMotorcycle, IconTrash, IconEdit } from "@/components/ui/icons";
 import { formatDate } from "@/lib/utils";
 
 interface MotoCardProps {
   moto: Moto;
-  onDelete?: (id: number) => void;
+  onEdit?: (moto: Moto) => void;
+  onDelete?: (moto: Moto) => void;
 }
 
-export function MotoCard({ moto, onDelete }: MotoCardProps) {
+export function MotoCard({ moto, onEdit, onDelete }: MotoCardProps) {
   return (
     <Card className="flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <IconMotorcycle size={28} className="text-gray-400" />
+        <IconMotorcycle size={28} className="text-gray-400 shrink-0 hidden sm:block" />
         <div>
           <p className="text-base font-semibold text-gray-900">
             {moto.brand} - {moto.model}
@@ -35,15 +36,26 @@ export function MotoCard({ moto, onDelete }: MotoCardProps) {
           </div>
         </div>
       </div>
-      {onDelete && (
-        <button
-          onClick={() => onDelete(moto.id)}
-          className="p-2 text-gray-400 hover:text-red-500 transition-colors"
-          aria-label="Supprimer"
-        >
-          <IconTrash size={20} />
-        </button>
-      )}
+      <div className="flex items-center gap-1 shrink-0">
+        {onEdit && (
+          <button
+            onClick={() => onEdit(moto)}
+            className="p-2 text-gray-400 hover:text-primary-500 transition-colors"
+            aria-label="Modifier"
+          >
+            <IconEdit size={18} />
+          </button>
+        )}
+        {onDelete && (
+          <button
+            onClick={() => onDelete(moto)}
+            className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+            aria-label="Supprimer"
+          >
+            <IconTrash size={18} />
+          </button>
+        )}
+      </div>
     </Card>
   );
 }
