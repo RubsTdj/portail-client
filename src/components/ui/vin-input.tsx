@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { validateVin, VinValidationResult } from "@/lib/moto-validation";
 import { IconCheckCircle } from "@/components/ui/icons";
@@ -11,16 +11,25 @@ interface VinInputProps {
   value: string;
   onChange: (value: string) => void;
   year: number;
+  error?: string;
   className?: string;
 }
 
-export function VinInput({ id, label, value, onChange, year, className }: VinInputProps) {
+const VIN_LENGTH = 17;
+
+export function VinInput({ id, label, value, onChange, year, error: externalError, className }: VinInputProps) {
   const [result, setResult] = useState<VinValidationResult>({
     error: null,
     checksumValid: null,
     info: null,
   });
   const [touched, setTouched] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const clean = value.replace(/\s/g, "");
+  const chars = clean.split("");
+  const isComplete = clean.length === VIN_LENGTH;
+  const requiresFull = year >= 1990;
 
   useEffect(() => {
     if (value) {
@@ -30,71 +39,102 @@ export function VinInput({ id, label, value, onChange, year, className }: VinInp
     }
   }, [value, year]);
 
-  const clean = value.replace(/\s/g, "");
-  const showCounter = year >= 1990 && clean.length > 0;
-  const isComplete = clean.length === 17;
-  const hasError = touched && result.error;
+  const displayError = externalError || (touched ? result.error : null);
 
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className={cn("flex flex-col gap-1.5", className)}>
       {label && (
         <div className="flex items-center justify-between">
           <label htmlFor={id} className="text-sm font-medium text-gray-700">
             {label}
           </label>
-          {showCounter && (
+          {requiresFull && clean.length > 0 && (
             <span className={cn(
-              "text-xs font-medium",
+              "text-xs font-semibold tabular-nums",
               isComplete ? "text-emerald-600" : "text-gray-400"
             )}>
-              {clean.length}/17
+              {clean.length}/{VIN_LENGTH}
             </span>
           )}
         </div>
       )}
 
-      <input
-        id={id}
-        type="text"
-        value={value}
-        onChange={(e) => {
-          const v = e.target.value
-            .toUpperCase()
-            .replace(/[^A-HJ-NPR-Z0-9]/g, "")
-            .slice(0, 17);
-          onChange(v);
-        }}
-        onBlur={() => setTouched(true)}
-        placeholder="Ex: VF1RJA00056789012"
-        maxLength={17}
-        autoComplete="off"
-        spellCheck={false}
-        className={cn(
-          "w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 font-mono tracking-widest placeholder:text-gray-400 placeholder:font-sans placeholder:tracking-normal transition-colors",
-          "focus:outline-none focus:ring-1",
-          hasError
-            ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+      <div
+        className="cursor-text"
+        onClick={() => inputRef.current?.focus()}
+      >
+        <div className={cn(
+          "flex gap-px rounded-lg border p-2 transition-colors bg-white",
+          displayError
+            ? "border-red-500"
             : isComplete && result.checksumValid
-              ? "border-emerald-500 focus:border-emerald-500 focus:ring-emerald-500"
-              : "border-gray-300 focus:border-primary-500 focus:ring-primary-500",
-          className
-        )}
-      />
+              ? "border-emerald-500"
+              : "border-gray-300 focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-primary-500"
+        )}>
+          {Array.from({ length: VIN_LENGTH }).map((_, i) => (
+            <div
+              key={i}
+              className={cn(
+                "flex h-8 w-full items-center justify-center text-sm font-mono font-bold select-none transition-colors",
+                i === 8 && "border-x border-gray-200",
+                chars[i]
+                  ? "text-gray-900"
+                  : i === clean.length
+                    ? "bg-primary-50 border-b-2 border-primary-500"
+                    : "text-gray-200",
+                i < 3 && "bg-gray-50/50",
+                i >= 3 && i < 9 && "bg-white",
+                i >= 9 && "bg-gray-50/50",
+              )}
+            >
+              {chars[i] || (i === clean.length ? "│" : "·")}
+            </div>
+          ))}
+        </div>
 
-      {hasError && (
-        <p className="text-xs text-red-500">{result.error}</p>
+        <input
+          ref={inputRef}
+          id={id}
+          type="text"
+          value={value}
+          onChange={(e) => {
+            const v = e.target.value
+              .toUpperCase()
+              .replace(/[^A-HJ-NPR-Z0-9]/g, "")
+              .slice(0, VIN_LENGTH);
+            onChange(v);
+          }}
+          onBlur={() => setTouched(true)}
+          maxLength={VIN_LENGTH}
+          autoComplete="off"
+          spellCheck={false}
+          className="sr-only"
+          aria-label="Numéro de série VIN"
+        />
+      </div>
+
+      <div className="flex items-center justify-between text-xs">
+        <div className="flex items-center gap-3 text-gray-400">
+          <span>WMI</span>
+          <span>VDS</span>
+          <span>VIS</span>
+        </div>
+      </div>
+
+      {displayError && (
+        <p className="text-xs text-red-500">{displayError}</p>
       )}
 
       {isComplete && !result.error && (
-        <div className="flex items-start gap-2">
+        <div className="flex items-center gap-3">
           {result.checksumValid ? (
             <div className="flex items-center gap-1.5">
-              <IconCheckCircle size={14} className="text-emerald-500 shrink-0" />
-              <span className="text-xs text-emerald-600">VIN valide</span>
+              <IconCheckCircle size={14} className="text-emerald-500" />
+              <span className="text-xs font-medium text-emerald-600">VIN valide</span>
             </div>
           ) : result.checksumValid === false ? (
             <p className="text-xs text-amber-600">
-              Le checksum VIN ne correspond pas. Vérifiez votre saisie — certains constructeurs n&apos;utilisent pas le checksum standard.
+              Checksum non standard — vérifiez votre saisie.
             </p>
           ) : null}
           {result.info?.year && (
@@ -107,7 +147,7 @@ export function VinInput({ id, label, value, onChange, year, className }: VinInp
 
       {!touched && !value && (
         <p className="text-xs text-gray-400">
-          Disponible sur votre carte grise — champ E
+          17 caractères — disponible sur votre carte grise, champ E
         </p>
       )}
     </div>

@@ -5,9 +5,9 @@ import { Modal } from "@/components/ui/modal";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { VinInput } from "@/components/ui/vin-input";
 import { DISPLACEMENTS } from "@/lib/utils";
 import { BRAND_NAMES, getModelsForBrand } from "@/lib/moto-catalog";
-import { VinInput } from "@/components/ui/vin-input";
 import { Moto } from "@/lib/types";
 import { validateVin } from "@/lib/moto-validation";
 
@@ -62,15 +62,29 @@ const EMPTY_FORM: MotoFormData = {
   licensePlate: "", vin: "",
 };
 
+const REQUIRED_FIELDS: { key: keyof MotoFormData; label: string }[] = [
+  { key: "brand", label: "Marque" },
+  { key: "model", label: "Modèle" },
+  { key: "year", label: "Année" },
+  { key: "displacement", label: "Cylindrée" },
+  { key: "mileage", label: "Kilométrage" },
+  { key: "registrationDate", label: "Date de mise en circulation" },
+  { key: "licensePlate", label: "Plaque d'immatriculation" },
+  { key: "vin", label: "N° de série (VIN)" },
+];
+
 export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
   const isEdit = !!moto;
   const [form, setForm] = useState<MotoFormData>(EMPTY_FORM);
-  const [vinError, setVinError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<Partial<Record<keyof MotoFormData, string>>>({});
+  const [submitted, setSubmitted] = useState(false);
   const [brandIsOther, setBrandIsOther] = useState(false);
   const [modelIsOther, setModelIsOther] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
+      setSubmitted(false);
+      setErrors({});
       if (moto) {
         const f = motoToForm(moto);
         setForm(f);
@@ -106,6 +120,7 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
       setModelIsOther(false);
       setForm((prev) => ({ ...prev, brand: value, model: "" }));
     }
+    clearError("brand");
   };
 
   const handleModelChange = (value: string) => {
@@ -116,27 +131,60 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
       setModelIsOther(false);
       setForm((prev) => ({ ...prev, model: value }));
     }
+    clearError("model");
   };
 
   const handleChange = (field: keyof MotoFormData, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
-    if (field === "vin" || field === "year") {
-      setVinError(null);
+    clearError(field);
+  };
+
+  const clearError = (field: keyof MotoFormData) => {
+    if (errors[field]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
     }
   };
 
-  const handleSubmit = () => {
-    const year = parseInt(form.year) || 0;
-    if (form.vin) {
-      const result = validateVin(form.vin, year);
-      if (result.error) {
-        setVinError(result.error);
-        return;
+  const validate = (): boolean => {
+    const newErrors: Partial<Record<keyof MotoFormData, string>> = {};
+
+    for (const { key, label } of REQUIRED_FIELDS) {
+      if (!form[key]?.trim()) {
+        newErrors[key] = `${label} est requis`;
       }
     }
+
+    if (form.year && (isNaN(Number(form.year)) || Number(form.year) < 1900 || Number(form.year) > new Date().getFullYear() + 1)) {
+      newErrors.year = "Année invalide";
+    }
+
+    if (form.mileage && isNaN(Number(form.mileage))) {
+      newErrors.mileage = "Saisissez uniquement des chiffres";
+    }
+
+    if (form.vin) {
+      const vinResult = validateVin(form.vin, parseInt(form.year) || 0);
+      if (vinResult.error) {
+        newErrors.vin = vinResult.error;
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+    if (!validate()) return;
     onSubmit(form);
     onClose();
   };
+
+  const hasErrors = submitted && Object.keys(errors).length > 0;
 
   return (
     <Modal
@@ -146,11 +194,10 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
       className="max-w-xl"
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
-        {/* Row 1: Marque + Modèle */}
         {brandIsOther ? (
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-gray-700">Marque</label>
+              <label className="text-sm font-medium text-gray-700">Marque *</label>
               <button
                 type="button"
                 onClick={() => {
@@ -168,23 +215,25 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
               placeholder="Saisissez la marque"
               value={form.brand}
               onChange={(e) => handleChange("brand", e.target.value)}
+              error={submitted ? errors.brand : undefined}
             />
           </div>
         ) : (
           <Select
             id="brand"
-            label="Marque"
+            label="Marque *"
             placeholder="Sélectionnez"
             options={brandOptions}
             value={form.brand}
             onChange={(e) => handleBrandChange(e.target.value)}
+            error={submitted ? errors.brand : undefined}
           />
         )}
 
         {modelIsOther ? (
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-gray-700">Modèle</label>
+              <label className="text-sm font-medium text-gray-700">Modèle *</label>
               {!brandIsOther && (
                 <button
                   type="button"
@@ -203,44 +252,55 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
               placeholder="Saisissez le modèle"
               value={form.model}
               onChange={(e) => handleChange("model", e.target.value)}
+              error={submitted ? errors.model : undefined}
             />
           </div>
         ) : (
           <Select
             id="model"
-            label="Modèle"
+            label="Modèle *"
             placeholder={form.brand ? "Sélectionnez" : "Marque d'abord"}
             options={modelOptions}
             value={form.model}
             onChange={(e) => handleModelChange(e.target.value)}
             disabled={!form.brand}
+            error={submitted ? errors.model : undefined}
           />
         )}
 
-        {/* Row 2: Année + Cylindrée */}
         <Input
           id="year"
-          label="Année"
+          label="Année *"
           placeholder="Ex: 2019"
           value={form.year}
-          onChange={(e) => handleChange("year", e.target.value)}
+          onChange={(e) => {
+            const v = e.target.value.replace(/\D/g, "").slice(0, 4);
+            handleChange("year", v);
+          }}
+          error={submitted ? errors.year : undefined}
         />
         <Select
           id="displacement"
-          label="Cylindrée"
+          label="Cylindrée *"
           placeholder="Sélectionnez"
           options={displacementOptions}
           value={form.displacement}
-          onChange={(e) => handleChange("displacement", e.target.value)}
+          onChange={(e) => {
+            handleChange("displacement", e.target.value);
+          }}
+          error={submitted ? errors.displacement : undefined}
         />
 
-        {/* Row 3: Kilométrage + Couleur */}
         <Input
           id="mileage"
-          label="Kilométrage"
+          label="Kilométrage *"
           placeholder="Ex: 15000"
           value={form.mileage}
-          onChange={(e) => handleChange("mileage", e.target.value)}
+          onChange={(e) => {
+            const v = e.target.value.replace(/\D/g, "");
+            handleChange("mileage", v);
+          }}
+          error={submitted ? errors.mileage : undefined}
         />
         <Input
           id="color"
@@ -250,33 +310,40 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
           onChange={(e) => handleChange("color", e.target.value)}
         />
 
-        {/* Row 4: Date + Plaque */}
         <Input
           id="registrationDate"
           type="date"
-          label="Mise en circulation"
+          label="Mise en circulation *"
           value={form.registrationDate}
           onChange={(e) => handleChange("registrationDate", e.target.value)}
+          error={submitted ? errors.registrationDate : undefined}
         />
         <Input
           id="licensePlate"
-          label="Plaque"
+          label="Plaque *"
           placeholder="AB-123-CD"
           value={form.licensePlate}
-          onChange={(e) => handleChange("licensePlate", e.target.value)}
+          onChange={(e) => handleChange("licensePlate", e.target.value.toUpperCase())}
+          error={submitted ? errors.licensePlate : undefined}
         />
 
-        {/* Row 5: VIN (full width) */}
         <div className="sm:col-span-2">
           <VinInput
             id="vin"
-            label="N° de série (VIN)"
+            label="N° de série (VIN) *"
             value={form.vin}
             onChange={(value) => handleChange("vin", value)}
             year={parseInt(form.year) || 0}
+            error={submitted ? errors.vin : undefined}
           />
         </div>
       </div>
+
+      {hasErrors && (
+        <p className="mt-3 text-xs text-red-500 text-center">
+          Veuillez remplir tous les champs obligatoires (*) avant de valider.
+        </p>
+      )}
 
       <div className="mt-5 flex justify-end gap-3">
         <Button variant="ghost" onClick={onClose}>
