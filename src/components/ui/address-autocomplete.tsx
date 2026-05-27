@@ -132,7 +132,7 @@ export function AddressAutocomplete({
         readOnly={readOnly}
         autoComplete="off"
         className={cn(
-          "w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 transition-colors",
+          "w-full rounded-lg border border-gray-300 px-4 py-2.5 text-base text-gray-900 placeholder:text-gray-400 transition-colors",
           "focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500",
           readOnly && "bg-gray-50",
           className

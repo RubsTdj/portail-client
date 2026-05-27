@@ -104,7 +104,7 @@ export function StepService({
                         onChange={(e) => onDescriptionChange(e.target.value)}
                         placeholder="Décrivez ici..."
                         rows={3}
-                        className="mt-1.5 w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+                        className="mt-1.5 w-full rounded-lg border border-gray-300 px-4 py-2.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
                       />
                     </div>
                   )}

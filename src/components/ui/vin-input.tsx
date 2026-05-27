@@ -75,7 +75,7 @@ export function VinInput({ id, label, value, onChange, year, error: externalErro
           autoComplete="off"
           spellCheck={false}
           className={cn(
-            "w-full rounded-lg border px-4 py-2.5 text-sm font-mono tracking-[0.2em] placeholder:tracking-[0.2em] placeholder:text-gray-300 transition-colors",
+            "w-full rounded-lg border px-4 py-2.5 text-base font-mono tracking-[0.2em] placeholder:tracking-[0.2em] placeholder:text-gray-300 transition-colors",
             "focus:outline-none focus:ring-1",
             displayError
               ? "border-red-500 focus:border-red-500 focus:ring-red-500"

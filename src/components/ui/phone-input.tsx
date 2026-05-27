@@ -137,7 +137,7 @@ export function PhoneInput({
             onChange={handleInputChange}
             placeholder={getPlaceholder(selectedCountry.pattern)}
             readOnly={readOnly}
-            className="flex-1 px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 bg-transparent outline-none"
+            className="flex-1 px-3 py-2.5 text-base text-gray-900 placeholder:text-gray-400 bg-transparent outline-none"
           />
         </div>
 

@@ -128,7 +128,7 @@ export function Select({
           onKeyDown={handleKeyDown}
           disabled={disabled}
           className={cn(
-            "flex w-full items-center justify-between rounded-lg border border-gray-300 px-4 py-2.5 text-left text-sm transition-colors",
+            "flex w-full items-center justify-between rounded-lg border border-gray-300 px-4 py-2.5 text-left text-base transition-colors",
             "focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500",
             error && "border-red-500 focus:border-red-500 focus:ring-red-500",
             disabled && "cursor-not-allowed bg-gray-50 text-gray-400",
