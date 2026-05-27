@@ -24,7 +24,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             "w-full max-w-full min-w-0 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-base text-gray-900 placeholder:text-gray-400 transition-colors",
             "focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500",
             error && "border-red-500 focus:border-red-500 focus:ring-red-500",
-            props.type === "date" && "appearance-none",
+            props.type === "date" && "appearance-none h-[46px]",
             className
           )}
           {...props}
