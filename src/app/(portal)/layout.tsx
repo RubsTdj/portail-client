@@ -11,7 +11,7 @@ export default function PortalLayout({
     <div className="flex min-h-screen">
       <Sidebar />
       <MobileHeader />
-      <main className="flex-1 pt-[72px] pb-24 px-5 sm:px-6 lg:pt-10 lg:pb-10 lg:px-10 xl:px-14 lg:ml-[220px]">
+      <main className="flex-1 pt-[calc(56px+env(safe-area-inset-top)+16px)] pb-24 px-5 sm:px-6 lg:pt-10 lg:pb-10 lg:px-10 xl:px-14 lg:ml-[220px]">
         {children}
       </main>
       <MobileNav />

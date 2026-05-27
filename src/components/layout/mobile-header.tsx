@@ -10,7 +10,7 @@ export function MobileHeader() {
   const displayUser = user || mockUser;
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 flex h-14 items-center justify-between border-b border-gray-100 bg-white px-4 lg:hidden">
+    <header className="fixed top-0 left-0 right-0 z-40 flex h-14 items-center justify-between border-b border-gray-100 bg-white px-4 pt-[env(safe-area-inset-top)] lg:hidden">
       <Avatar
         firstName={displayUser.firstName}
         lastName={displayUser.lastName}
