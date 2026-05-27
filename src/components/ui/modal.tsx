@@ -9,10 +9,11 @@ interface ModalProps {
   onClose: () => void;
   title?: string;
   children: React.ReactNode;
+  footer?: React.ReactNode;
   className?: string;
 }
 
-export function Modal({ isOpen, onClose, title, children, className }: ModalProps) {
+export function Modal({ isOpen, onClose, title, children, footer, className }: ModalProps) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -41,11 +42,11 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
       />
       <div
         className={cn(
-          "relative z-10 w-full max-w-lg max-h-[85vh] overflow-y-auto overflow-x-hidden rounded-2xl bg-white p-5 sm:p-6 shadow-xl",
+          "relative z-10 w-full max-w-lg max-h-[85vh] flex flex-col rounded-2xl bg-white shadow-xl",
           className
         )}
       >
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between px-5 sm:px-6 pt-5 sm:pt-6 pb-4 border-b border-gray-100 shrink-0">
           {title && (
             <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
           )}
@@ -57,7 +58,14 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
             <IconClose size={24} />
           </button>
         </div>
-        {children}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden px-5 sm:px-6 py-5">
+          {children}
+        </div>
+        {footer && (
+          <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-4 border-t border-gray-100 shrink-0">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );

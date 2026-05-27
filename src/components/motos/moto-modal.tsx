@@ -192,6 +192,16 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
       onClose={onClose}
       title={isEdit ? "Modifier la moto" : "Ajouter une moto"}
       className="max-w-xl"
+      footer={
+        <div className="flex justify-end gap-3">
+          <Button variant="ghost" onClick={onClose}>
+            Annuler
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            {isEdit ? "Enregistrer" : "Ajouter ma moto"}
+          </Button>
+        </div>
+      }
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
         {brandIsOther ? (
@@ -344,15 +354,6 @@ export function MotoModal({ isOpen, onClose, onSubmit, moto }: MotoModalProps) {
           Veuillez remplir tous les champs obligatoires (*) avant de valider.
         </p>
       )}
-
-      <div className="mt-5 flex justify-end gap-3">
-        <Button variant="ghost" onClick={onClose}>
-          Annuler
-        </Button>
-        <Button variant="primary" onClick={handleSubmit}>
-          {isEdit ? "Enregistrer" : "Ajouter ma moto"}
-        </Button>
-      </div>
     </Modal>
   );
 }
