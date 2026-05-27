@@ -40,7 +40,7 @@ export function VinInput({ id, label, value, onChange, year, error: externalErro
   const displayError = externalError || (touched ? result.error : null);
 
   return (
-    <div className={cn("flex flex-col gap-1.5", className)}>
+    <div className={cn("flex flex-col gap-1.5 min-w-0", className)}>
       {label && (
         <div className="flex items-center justify-between">
           <label htmlFor={id} className="text-sm font-medium text-gray-700">
